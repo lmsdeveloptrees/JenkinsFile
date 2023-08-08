@@ -11,9 +11,16 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Replace these commands with your actual build commands
+                    // Install dependencies
+                    sh "pip install -r requirements.txt"
+
+                    // Collect static files
+                    sh "python manage.py collectstatic --noinput"
+
+                    // Run database migrations
+                    sh "python manage.py migrate"
+
                     sh "python manage.py runserver"
-                    // Add more build commands as needed
                 }
             }
         }
@@ -21,7 +28,7 @@ pipeline {
 
     post {
         success {
-            echo 'Build Success'
+            echo 'build success'
         }
         failure {
             echo 'build failure'
