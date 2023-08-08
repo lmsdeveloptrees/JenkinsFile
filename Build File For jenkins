@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Replace these commands with your actual build commands
+                    sh "python manage.py runserver"
+                    // Add more build commands as needed
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build Success'
+        }
+        failure {
+            echo 'build failure'
+        }
+    }
+}
